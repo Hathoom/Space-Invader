@@ -49,7 +49,7 @@ public class EnemyBlock : MonoBehaviour
             }
 
             //shoot every time we move, this is temporary
-            RandomShoot(Random.Range(0, 14));
+            RandomShoot();
         }
 
     }
@@ -82,8 +82,21 @@ public class EnemyBlock : MonoBehaviour
         }
     }
 
-    private void RandomShoot(int index)
+    private void RandomShoot()
     {
-        enemies[index].Shoot();
+        int index = Random.Range(0, 14);
+        bool shot = false;
+        while (!shot)
+        {
+            if (!enemies[index].IsDead())
+            {
+                if (enemies[index].tag != "Sore")
+                {
+                    enemies[index].Shoot();
+                    shot = true;
+                }
+            }
+            index = Random.Range(0, 14);
+        }
     }
 }

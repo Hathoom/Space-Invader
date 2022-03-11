@@ -12,6 +12,8 @@ public class Cancer : MonoBehaviour
 
     public float speed = 1f;
 
+    public bool menuFlag = false;
+
     void Start()
     {
         enemyAnimator = GetComponent<Animator>();
@@ -19,7 +21,10 @@ public class Cancer : MonoBehaviour
         //all enemies get the UI
         ui = FindObjectOfType<UI>();
 
-        GetComponent<Rigidbody2D>().velocity = Vector2.right * speed;
+        if (!menuFlag)
+        {
+            GetComponent<Rigidbody2D>().velocity = Vector2.right * speed;
+        }
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -39,7 +44,7 @@ public class Cancer : MonoBehaviour
             // start death animation for a small amount of time
             enemyAnimator.SetTrigger(Destroyed);
 
-            Destroy(gameObject, .5f);
+            Destroy(gameObject, 1f);
 
         }
     }
