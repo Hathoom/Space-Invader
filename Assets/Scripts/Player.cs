@@ -75,7 +75,9 @@ public class Player : MonoBehaviour
         if (collider.gameObject.tag == "enemybullet" || collider.gameObject.tag == "Callous" || collider.gameObject.tag == "Sore" || collider.gameObject.tag == "Blister")
         {
             playerAnimator.SetTrigger("Destroyed");
-            Destroy (gameObject, playerAnimator.GetCurrentAnimatorStateInfo(0).length); 
+            Destroy (gameObject, 1f); 
+
+            GameObject.Find("GameManager").GetComponent<GameManager>().LoadCredits();
 
             Debug.Log("You lose!");
         }
@@ -87,7 +89,9 @@ public class Player : MonoBehaviour
         if (collider.gameObject.tag == "enemybullet" || collider.gameObject.tag == "Callous" || collider.gameObject.tag == "Sore" || collider.gameObject.tag == "Blister")
         {
             playerAnimator.SetTrigger("Destroyed");
-            Destroy (gameObject, playerAnimator.GetCurrentAnimatorStateInfo(0).length); 
+            Destroy (gameObject, 1f); 
+
+            GameObject.Find("GameManager").GetComponent<GameManager>().LoadCredits();
 
             Debug.Log("You lose!");
         }

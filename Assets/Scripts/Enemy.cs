@@ -14,6 +14,8 @@ public class Enemy : MonoBehaviour
     private BoxCollider2D collider2D;
     private SpriteRenderer renderer;
 
+    private bool isDead = false;
+
     public GameObject enemyBulletPrefab;
     public Transform enemyShootingOffsetTransform;
 
@@ -57,11 +59,12 @@ public class Enemy : MonoBehaviour
             // start death animation for a small amount of time
             enemyAnimator.SetTrigger(Destroyed);
 
+            isDead = true;
+
             //make it so while enemy is "dying" they won't trigger anything else
             collider2D.enabled = false;
 
-            // disable the enemy sprite
-            renderer.enabled = false;
+            StartCoroutine(DelayDeath(enemyAnimator.GetCurrentAnimatorStateInfo(0).length));
 
             // inform parent child died
             parent.EnemyDied();
@@ -69,11 +72,18 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    IEnumerator DelayDeath(float _delay = 0)
+    {
+        yield return new WaitForSeconds(_delay);
+        renderer.enabled = false;
+    }
+
 
     public void Respawn()
     {
         collider2D.enabled = true;
         renderer.enabled = true;
+        isDead = false;
         enemyAnimator.SetTrigger(Destroyed);
     }
 
@@ -82,6 +92,13 @@ public class Enemy : MonoBehaviour
     {
         GameObject enemyShot = Instantiate(enemyBulletPrefab, enemyShootingOffsetTransform.position, Quaternion.identity);
     
+        enemyAnimator.SetTrigger("Shoot");
+
         Destroy(enemyShot, 3f);
+    }
+
+    public bool IsDead()
+    {
+        return isDead;
     }
 }

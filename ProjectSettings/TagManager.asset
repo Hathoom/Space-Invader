@@ -4,15 +4,7 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Callous
-  - Blister
-  - Sore
-  - Canvas
-  - bullet
-  - enemybullet
-  - parent
-  - Spawner
-  - Cancer
+  - Puck
   layers:
   - Default
   - TransparentFX
