@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Serialization;
+using System.Collections;
+using System.Collections.Generic;
 
 public class Player : MonoBehaviour
 {
@@ -75,9 +77,9 @@ public class Player : MonoBehaviour
         if (collider.gameObject.tag == "enemybullet" || collider.gameObject.tag == "Callous" || collider.gameObject.tag == "Sore" || collider.gameObject.tag == "Blister")
         {
             playerAnimator.SetTrigger("Destroyed");
-            Destroy (gameObject, 1f); 
+            //Destroy (gameObject, 1f); 
 
-            GameObject.Find("GameManager").GetComponent<GameManager>().LoadCredits();
+            StartCoroutine(waitRoutine());
 
             Debug.Log("You lose!");
         }
@@ -89,11 +91,23 @@ public class Player : MonoBehaviour
         if (collider.gameObject.tag == "enemybullet" || collider.gameObject.tag == "Callous" || collider.gameObject.tag == "Sore" || collider.gameObject.tag == "Blister")
         {
             playerAnimator.SetTrigger("Destroyed");
-            Destroy (gameObject, 1f); 
 
-            GameObject.Find("GameManager").GetComponent<GameManager>().LoadCredits();
+            StartCoroutine(waitRoutine());
+
 
             Debug.Log("You lose!");
         }
+    }
+
+
+    IEnumerator waitRoutine()
+    {
+        Debug.Log("Started routing at timestamp : " + Time.time);
+
+        yield return new WaitForSecondsRealtime(1f);
+
+        GameObject.Find("GameManager").GetComponent<GameManager>().LoadCredits();
+
+        Debug.Log("Finished routine at timestamp : " + Time.time);
     }
 }
